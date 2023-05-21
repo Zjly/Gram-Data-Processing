@@ -1,3 +1,5 @@
+import os
+
 import torch
 import pandas as pd
 from torch.utils.data import random_split
@@ -30,11 +32,33 @@ def remove_dum(code):
     test_set = test_set.dataset.iloc[test_set.indices].reset_index(drop=True)
 
     # 保存数据集
+    os.makedirs(f"output/1.数据集去重并划分/{code}", exist_ok=True)
+    total_set.to_feather(f"output/1.数据集去重并划分/{code}/total.feather")
+    train_set.to_feather(f"output/1.数据集去重并划分/{code}/train.feather")
+    test_set.to_feather(f"output/1.数据集去重并划分/{code}/test.feather")
+
+
+def union(code):
+    """
+    数据集合并
+    :param code:
+    :return:
+    """
+    train_set = pd.read_feather(f"data/{code}/train.feather")
+    test_set = pd.read_feather(f"data/{code}/test.feather")
+
+    # 合并train和test
+    total_set = pd.concat([train_set, test_set], ignore_index=True)
+
+    # 保存数据集
+    os.makedirs(f"output/1.数据集去重并划分/{code}", exist_ok=True)
     total_set.to_feather(f"output/1.数据集去重并划分/{code}/total.feather")
     train_set.to_feather(f"output/1.数据集去重并划分/{code}/train.feather")
     test_set.to_feather(f"output/1.数据集去重并划分/{code}/test.feather")
 
 
 if __name__ == '__main__':
-    remove_dum('java')
-    remove_dum('python')
+    # remove_dum('java')
+    # remove_dum('python')
+    union('java')
+    union('python')

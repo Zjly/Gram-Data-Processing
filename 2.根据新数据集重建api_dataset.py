@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 from tqdm import tqdm
 
@@ -21,10 +23,11 @@ def create_api_dataset(code):
             api_count_dict[api] = api_count_dict.setdefault(api, 0) + 1
 
     # 创建新数据集
-    new_api_dataset = pd.DataFrame(columns=['index', 'api', 'description'])
+    new_api_dataset = pd.DataFrame(columns=['index', 'api', 'description', 'count'])
     index_list = []
     api_list = []
     description_list = []
+    count_list = []
 
     # 根据排序后的结果创建新数据集
     api_count_list = sorted(api_count_dict.items(), key=lambda x: x[1], reverse=True)
@@ -34,12 +37,15 @@ def create_api_dataset(code):
         index_list.append(index)
         api_list.append(api)
         description_list.append(api_description_dict[api])
+        count_list.append(row[1])
 
         index += 1
 
     new_api_dataset['index'] = index_list
     new_api_dataset['api'] = api_list
     new_api_dataset['description'] = description_list
+    new_api_dataset['count'] = count_list
+    os.makedirs(f"output/2.根据新数据集重建api_dataset/{code}", exist_ok=True)
     new_api_dataset.to_feather(f"output/2.根据新数据集重建api_dataset/{code}/api.feather")
 
 

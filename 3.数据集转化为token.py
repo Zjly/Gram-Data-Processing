@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 from tqdm import tqdm
 
@@ -25,13 +27,12 @@ def trans2token(code, type):
         api_sequence_list.append(api_list)
 
     dataset['api_sequence'] = api_sequence_list
+    os.makedirs(f"output/3.数据集转化为token/{code}", exist_ok=True)
     dataset.to_feather(f"output/3.数据集转化为token/{code}/{type}.feather")
 
 
 if __name__ == '__main__':
-    trans2token('java', 'total')
-    # trans2token('java', 'train')
-    # trans2token('java', 'test')
-    trans2token('python', 'total')
-    # trans2token('python', 'train')
-    # trans2token('python', 'test')
+    trans2token('java', 'train')
+    trans2token('java', 'test')
+    trans2token('python', 'train')
+    trans2token('python', 'test')

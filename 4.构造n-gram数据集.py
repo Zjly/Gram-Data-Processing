@@ -1,3 +1,5 @@
+import os
+
 import pandas as pd
 from tqdm import tqdm
 
@@ -64,6 +66,7 @@ def create_api_dataset(code, gram_num):
     gram_dataset['gram'] = gram_list
     gram_dataset['gram_type'] = gram_type_list
     gram_dataset['count'] = count_list
+    os.makedirs(f"output/4.构造n-gram数据集/{code}", exist_ok=True)
     gram_dataset.to_feather(f"output/4.构造n-gram数据集/{code}/gram.feather")
 
 
@@ -71,11 +74,12 @@ def sort(code):
     df = pd.read_feather(f"output/4.构造n-gram数据集/{code}/gram.feather")
     gram_df = df.sort_values(by=['api', 'count', 'gram_type'], ascending=[True, False, True])
     gram_df = gram_df.reset_index(drop=True)
+    os.makedirs(f"output/4.构造n-gram数据集/{code}", exist_ok=True)
     gram_df.to_feather(f"output/4_5.排序数据集/{code}/gram.feather")
 
 
 if __name__ == '__main__':
-    # create_api_dataset('java', 3)
-    # create_api_dataset('python', 3)
+    create_api_dataset('java', 3)
+    create_api_dataset('python', 3)
     sort('java')
     sort('python')
