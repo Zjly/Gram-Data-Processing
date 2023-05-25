@@ -74,7 +74,7 @@ def sort(code):
     df = pd.read_feather(f"output/4.构造n-gram数据集/{code}/gram.feather")
     gram_df = df.sort_values(by=['api', 'count', 'gram_type'], ascending=[True, False, True])
     gram_df = gram_df.reset_index(drop=True)
-    os.makedirs(f"output/4.构造n-gram数据集/{code}", exist_ok=True)
+    os.makedirs(f"output/4_5.排序数据集/{code}", exist_ok=True)
     gram_df.to_feather(f"output/4_5.排序数据集/{code}/gram.feather")
 
 
