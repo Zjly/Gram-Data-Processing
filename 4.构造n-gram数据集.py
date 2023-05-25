@@ -18,7 +18,7 @@ class Gram:
             self.gram_type) == str(other.gram_type)
 
 
-def create_api_dataset(code, gram_num):
+def create_gram_dataset(code, gram_num):
     """
     构造n-gram数据集
     :param code:
@@ -79,7 +79,7 @@ def sort(code):
 
 
 if __name__ == '__main__':
-    create_api_dataset('java', 3)
-    create_api_dataset('python', 3)
+    create_gram_dataset('java', 3)
+    create_gram_dataset('python', 3)
     sort('java')
     sort('python')
