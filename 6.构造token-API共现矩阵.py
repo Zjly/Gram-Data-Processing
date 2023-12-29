@@ -28,7 +28,12 @@ def create_matrix(code):
     csr_matrix = sparse.csr_matrix(matrix)
     sparse.save_npz(f"output/6.构造token-API共现矩阵/{code}.npz", csr_matrix)
 
+def print_matrix(code):
+    matrix = sparse.load_npz(f"output/6.构造token-API共现矩阵/remove_dup/{code}.npz").toarray()
+    print(matrix)
 
 if __name__ == '__main__':
-    create_matrix('java')
-    create_matrix('python')
+    # create_matrix('java')
+    # create_matrix('python')
+    print_matrix('java')
+    print_matrix('python')
